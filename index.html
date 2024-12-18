@@ -10,23 +10,62 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
             margin: 0;
             background-color: #f4f4f9;
             color: #333;
-        }
-        .container {
             text-align: center;
         }
+        .container {
+            max-width: 600px; /* Limita a largura máxima */
+            padding: 10px;
+        }
+        .main-title {
+            font-size: 3em;
+            margin: 0.2em 0;
+        }
+        .sub-title {
+            font-size: 1.5em;
+            margin: 0.2em 0;
+        }
+        .image {
+            width: 100%;
+            max-width: 300px; /* Tamanho máximo da imagem */
+            height: auto;
+            margin: 1em 0; /* Espaço acima e abaixo da imagem */
+        }
+        .description {
+            font-size: 1.2em;
+            margin-bottom: 1.5em; /* Espaço abaixo do texto */
+            line-height: 1.5;
+        }
         .time-display {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: bold;
+            margin-top: 1em;
         }
     </style>
 </head>
 <body>
+    <!-- Container para centralizar todos os elementos -->
     <div class="container">
-        <h1>Estamos juntos a</h1>
+        <!-- Título Principal -->
+        <h1 class="main-title">Título Principal</h1>
+        
+        <!-- Imagem Centralizada -->
+        <img src="FotoYT.png" alt="Imagem Centralizada" class="image">
+
+        <!-- Título Menor -->
+        <h2 class="sub-title">Título Secundário</h2>
+
+        <!-- Texto Centralizado -->
+        <p class="description">
+            Aqui vai um texto centralizado para complementar as informações. <br>
+            Esse texto pode conter mais de uma linha e será exibido de forma bonita e organizada.
+        </p>
+
+        <!-- Contador Dinâmico -->
         <div class="time-display" id="timeDisplay">Carregando...</div>
     </div>
 
@@ -53,7 +92,7 @@
             const yearLabel = years === 1 ? "ano" : "anos";
 
             // Formata o texto do contador
-            const formattedTime = `${years} ${yearLabel} ${days} dias ${hours} horas ${minutes} minutos ${seconds} segundos`;
+            const formattedTime = `${years} ${yearLabel}, ${days} dias, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
 
             // Atualiza o elemento na página
             document.getElementById("timeDisplay").textContent = formattedTime;
