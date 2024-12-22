@@ -3,106 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador Dinâmico</title>
+    <title>Nosso Contador Dinâmico</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
             margin: 0;
-            background-color: #f4f4f9;
-            color: #333;
+            padding: 0;
+            background-color: #0e2532; /* Azul escuro #1b3a4b */ 
+            color: #fff;
             text-align: center;
+            overflow-y: auto; /* Habilita rolagem vertical */
         }
         .container {
-            max-width: 600px; /* Limita a largura máxima */
-            padding: 10px;
+            max-width: 600px;
+            padding: 20px;
+            margin: auto;
         }
         .main-title {
             font-size: 3em;
-            margin: 0.2em 0;
+            margin: 0.5em 0;
+            color: #f55b13; /* Vermelho */
+            font-family: 'Lobster', cursive;
         }
         .sub-title {
-            font-size: 1.5em;
-            margin: 0.2em 0;
-        }
-        .image {
-            width: 100%;
-            max-width: 300px; /* Tamanho máximo da imagem */
-            height: auto;
-            margin: 1em 0; /* Espaço acima e abaixo da imagem */
+            font-size: 1.8em;
+            margin: 0.5em 0;
+            font-family: 'Brush Script', cursive;
+            color: #2fa2ff; /* Branco */
         }
         .description {
             font-size: 1.2em;
-            margin-bottom: 1.5em; /* Espaço abaixo do texto */
+            margin-bottom: 1.5em;
             line-height: 1.5;
+            color: #fff; /* Branco */
+            font-family: 'Optima', cursive; /* Times New Roman*/
+        }
+        .image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 1em 0;
         }
         .time-display {
             font-size: 1.8em;
             font-weight: bold;
             margin-top: 1em;
+            line-height: 2; /* Espaçamento entre linhas */
+            color: #fff; /* Branco */
+            font-family: 'Courier New', cursive;
+        }
+        .final {
+            font-size: 1.8em;
+            margin: 0.5em 0;
+            font-family: 'Brush Script', cursive;
+            color: #ff0000; /* Branco */
         }
     </style>
 </head>
 <body>
-    <!-- Container para centralizar todos os elementos -->
     <div class="container">
         <!-- Título Principal -->
-        <h1 class="main-title">Título Principal</h1>
-        
-        <!-- Imagem Centralizada -->
-        <img src="FotoYT.png" alt="Imagem Centralizada" class="image">
+        <h1 class="main-title">Vitória e João Pedro</h1>
 
-        <!-- Título Menor -->
-        <h2 class="sub-title">Título Secundário</h2>
+        <!-- Imagem -->
+        <img src="imagens/1.jpg" alt="Imagem Centralizada" class="image" id="slideshow">
 
-        <!-- Texto Centralizado -->
+        <!-- Descrição -->
         <p class="description">
             Aqui vai um texto centralizado para complementar as informações. <br>
             Esse texto pode conter mais de uma linha e será exibido de forma bonita e organizada.
         </p>
 
-        <!-- Contador Dinâmico -->
-        <div class="time-display" id="timeDisplay">Carregando...</div>
+        <!-- Título Secundário -->
+        <h2 class="sub-title">Compartilhando Momentos Juntos a</h2>
+
+        <!-- Contador de Tempo -->
+        <div id="timeDisplay" class="time-display"></div>
+
+        <!-- Título Secundário -->
+        <h2 class="final">Eu Te Amo a todo e cada instante</h2>
     </div>
 
     <script>
-        // Define o horário de início (23:55 do dia 23/12/2023)
         const startTime = new Date("2023-12-23T23:55:00");
 
-        // Atualiza o contador dinamicamente
+        // Função para atualizar o contador
         function updateCounter() {
             const now = new Date();
-            let elapsedTime = now - startTime;
+            const elapsedTime = now - startTime;
 
-            // Calcula o tempo em anos, dias, horas, minutos e segundos
             const seconds = Math.floor((elapsedTime / 1000) % 60);
             const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
             const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
 
-            // Calcula dias totais e converte anos e dias restantes
             const totalDays = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
             const years = Math.floor(totalDays / 365);
             const days = totalDays % 365;
 
-            // Verifica se "ano" deve estar no singular ou plural
             const yearLabel = years === 1 ? "ano" : "anos";
+            const dayLabel = days === 1 ? "dia" : "dias";
+            const hourLabel = hours === 1 ? "hora" : "horas";
+            const minuteLabel = minutes === 1 ? "minuto" : "minutos";
+            const secondLabel = seconds === 1 ? "segundo" : "segundos";
 
-            // Formata o texto do contador
-            const formattedTime = `${years} ${yearLabel}, ${days} dias, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
-
-            // Atualiza o elemento na página
-            document.getElementById("timeDisplay").textContent = formattedTime;
+            const formattedTime = `
+                <div>${years} ${yearLabel}</div>
+                <div>${days} ${dayLabel}</div>
+                <div>${hours} ${hourLabel}</div>
+                <div>${minutes} ${minuteLabel}</div>
+                <div>${seconds} ${secondLabel}</div>`;
+            
+            document.getElementById("timeDisplay").innerHTML = formattedTime;
         }
 
-        // Atualiza o contador a cada segundo
-        setInterval(updateCounter, 1000);
+        // Troca de imagem a cada 2 segundos
+        const totalImages = 47; // Número total de imagens
+        const imgElement = document.getElementById("slideshow");
+        let currentImage = 1;
 
-        // Chama a função para exibir imediatamente o tempo decorrido
-        updateCounter();
+        function changeImage() {
+            currentImage++;
+            if (currentImage > totalImages) {
+                currentImage = 1; // Reinicia no início
+            }
+            imgElement.src = `imagens/${currentImage}.jpg`; // Atualiza a imagem
+        }
+
+        setInterval(updateCounter, 1000); // Atualiza o contador a cada segundo
+        setInterval(changeImage, 2000); // Troca de imagem a cada 2 segundos
+
+        updateCounter(); // Atualiza o contador imediatamente
     </script>
 </body>
 </html>
