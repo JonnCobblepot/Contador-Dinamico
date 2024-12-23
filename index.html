@@ -34,11 +34,11 @@
             color: #2fa2ff; /* Branco */
         }
         .description {
-            font-size: 1.2em;
+            font-size: 1.4em;
             margin-bottom: 1.5em;
             line-height: 1.5;
             color: #fff; /* Branco */
-            font-family: 'Optima', cursive; /* Times New Roman*/
+            font-family: 'Courier New', cursive; /* Times New Roman*/
         }
         .image {
             width: 100%;
@@ -57,7 +57,7 @@
         .final {
             font-size: 1.8em;
             margin: 0.5em 0;
-            font-family: 'Brush Script', cursive;
+            font-family: 'Lobster', cursive;
             color: #ff0000; /* Branco */
         }
     </style>
@@ -92,15 +92,26 @@
         // Função para atualizar o contador
         function updateCounter() {
             const now = new Date();
-            const elapsedTime = now - startTime;
 
-            const seconds = Math.floor((elapsedTime / 1000) % 60);
-            const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
-            const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
+            // Cálculo preciso de anos e dias
+            const startYear = startTime.getFullYear();
+            const currentYear = now.getFullYear();
 
-            const totalDays = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
-            const years = Math.floor(totalDays / 365);
-            const days = totalDays % 365;
+            let years = currentYear - startYear;
+            let anniversaryThisYear = new Date(startYear + years, startTime.getMonth(), startTime.getDate(), startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+
+            // Ajustar se ainda não chegou ao aniversário do ano atual
+            if (now < anniversaryThisYear) {
+                years--;
+                anniversaryThisYear = new Date(startYear + years, startTime.getMonth(), startTime.getDate(), startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+            }
+
+            const elapsedSinceLastAnniversary = now - anniversaryThisYear;
+
+            const days = Math.floor(elapsedSinceLastAnniversary / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((elapsedSinceLastAnniversary / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((elapsedSinceLastAnniversary / (1000 * 60)) % 60);
+            const seconds = Math.floor((elapsedSinceLastAnniversary / 1000) % 60);
 
             const yearLabel = years === 1 ? "ano" : "anos";
             const dayLabel = days === 1 ? "dia" : "dias";
