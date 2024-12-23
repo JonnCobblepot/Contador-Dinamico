@@ -72,6 +72,7 @@
             <source src="imagens/partilhar.mp3" type="audio/mpeg">
             Seu navegador não suporta o elemento de áudio.
         </audio>
+        <button id="playMusic" style="display: none;">Clique para ativar o áudio</button>
 
         <!-- Imagem -->
         <img src="imagens/1.jpg" alt="Imagem Centralizada" class="image" id="slideshow">
@@ -102,11 +103,21 @@
         const startTime = new Date("2023-12-23T23:55:00");
 
         const audioElement = document.getElementById("backgroundMusic");
-        audioElement.addEventListener("canplay", () => {
-            audioElement.play().catch(error => {
-                console.error("Erro ao iniciar o áudio:", error);
+        const playButton = document.getElementById("playMusic");
+
+        function tryToPlay() {
+            audioElement.play().then(() => {
+                playButton.style.display = "none"; // Esconde o botão se tocar com sucesso
+            }).catch(() => {
+                playButton.style.display = "block"; // Mostra o botão se o autoplay falhar
             });
-        });
+        }
+
+        // Tenta tocar o áudio ao carregar
+        tryToPlay();
+
+        // Toca o áudio se o usuário clicar no botão
+        playButton.addEventListener("click", tryToPlay);
 
         // Função para atualizar o contador
         function updateCounter() {
